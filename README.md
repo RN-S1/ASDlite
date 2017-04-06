@@ -22,9 +22,9 @@ ASDlite design goals
 Operations in ASDlite
 ---------------------
 
-<code>operation ::= keyword | operation-instance
-operation-type ::= keyword | type-symbol
-operation-designator ::= keyword | (keyword . plist) | type-symbol | operation-instance</code>
+<code>operation ::= keyword | operation-instance</code><br>
+<code>operation-type ::= keyword | type-symbol</code><br>
+<code>operation-designator ::= keyword | (keyword . plist) | type-symbol | operation-instance</code><br>
 
 Operations are passed to <code>perform</code> and other operation-specific methods. Operation designators can be used in the right-hand side of rules.
 We encourage using simple keywords like <code>:compile</code> or <code>:load</code>. For these, ASDlite defines corresponding methods with <code>eql</code> specializers.
@@ -47,9 +47,9 @@ An <i>action</i> is a pair of an operation and a component. Some actions modify 
 There are two kinds of rules.
 
 caused-by (named "in-order-to" in ASDF)
-    If any of dependee actions are already in the current plan (as its results have become out-of-date according to timestamp or as a result of other rules executing successfully), that triggers this rule, i.e. the target action is also placed into the plan.
+<blockquote>If any of dependee actions are already in the current plan (as its results have become out-of-date according to timestamp or as a result of other rules executing successfully), that triggers this rule, i.e. the target action is also placed into the plan.</blockquote>
 requires (named "do-first" in ASDF)
-    These dependee actions have to be planned before the operation on the target component. But they do not trigger this rule per se, i.e. re-performing the target operation.
+<blockquote>These dependee actions have to be planned before the operation on the target component. But they do not trigger this rule per se, i.e. re-performing the target operation.</blockquote>
 
 Syntax
 
