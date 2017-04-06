@@ -2,45 +2,47 @@
 <b><i>ASDlite is a light-weight version of ASDF</i></b>
 
 
-ASDlite is a light-weight version of ASDF (Another System Definition Facility), an extensible build facility for Common Lisp. It supports basis ASDF functions and operation classes and can be used as a replacement in many cases.
+ASDlite is a light-weight version of [ASDF (Another System Definition Facility)](http://common-lisp.net/project/asdf/), an extensible build facility for Common Lisp. It supports basis ASDF functions and operation classes and can be used as a replacement in many cases.
+
 Platforms
+---------
 
 ASDlite was tested on the following Lisp implementations:
-
-    LispWorks 4.4, 5.0, and 6.1.
-    SBCL 1.0.55.
+* [LispWorks](http://www.lispworks.com/) 4.4, 5.0, and 6.1.
+* [SBCL](http://www.sbcl.org/)SBCL 1.0.55.
 
 ASDlite design goals
+--------------------
 
-    Small footprint.
-    Ease of embedding into applications and systems not related to "compile-and-load Lisp files" tasks, for example, YstokHelp.
-    ASDF compatibility for typical needs.
-    Operation arguments specification in dependencies.
+* Small footprint.
+* Ease of embedding into applications and systems not related to "compile-and-load Lisp files" tasks, for example, [YstokHelp](http://lisp.ystok.ru/yhelp/).
+* ASDF compatibility for typical needs.
+* Operation arguments specification in dependencies.
 
 Operations in ASDlite
+---------------------
 
-operation ::= keyword | operation-instance
+<code>operation ::= keyword | operation-instance
 operation-type ::= keyword | type-symbol
-operation-designator ::= keyword | (keyword . plist) | type-symbol | operation-instance
+operation-designator ::= keyword | (keyword . plist) | type-symbol | operation-instance</code>
 
-Operations are passed to perform and other operation-specific methods. Operation designators can be used in the right-hand side of rules.
+Operations are passed to <code>perform</code> and other operation-specific methods. Operation designators can be used in the right-hand side of rules.
+We encourage using simple keywords like <code>:compile</code> or <code>:load</code>. For these, ASDlite defines corresponding methods with <code>eql</code> specializers.
+The <i>plist</i> allows you to pass key arguments to the operation methods. In the <i>normal mode</i>, ASDlite accepts only keyword-based forms.
 
-We encourage using simple keywords like :compile or :load. For these, ASDlite defines corresponding methods with eql specializers.
-
-The plist allows you to pass key arguments to the operation methods. In the normal mode, ASDlite accepts only keyword-based forms.
-
-If you feel these are not enough and need "full-fledged" ASDF operation classes, you can switch to the ASDF compatibility mode as follows:
-
-    push :asdf-compat into *features* before compiling asdlite.lisp,
-    refer to asdf:compile-op, asdf:load-op and the like,
-    define your own subclasses of the operation class etc.
+If you feel these are not enough and need "full-fledged" ASDF operation classes, you can switch to the ASDF <i>compatibility mode</i> as follows:
+* push <code>:asdf-compat</code> into <code>*features*</code> before compiling [asdlite.lisp](https://github.com/RN-S1/ASDlite/blob/master/asdlite.lisp),
+* refer to <code>asdf:compile-op</code>, <code>asdf:load-op</code> and the like,
+* efine your own subclasses of the <code>operation</code> class etc.
 
 In the compatibility mode, ASDlite accepts all the above forms of operations and designators.
+
 Dependencies in ASDlite
+---------------------
 
-An action is a pair of an operation and a component. Some actions modify the file system, whereas other actions modify the current image, and this implies a difference in how to interpret timestamps.
+An <i>action</i> is a pair of an operation and a component. Some actions modify the file system, whereas other actions modify the current image, and this implies a difference in how to interpret timestamps.
 
-Dependencies (rules) between actions are stored in each (target) component and represented by the two alists of target operations to other (dependee) actions.
+<i>Dependencies (rules)</i> between actions are stored in each <i>(target)</i> component and represented by the two alists of target operations to other <i>(dependee)</i> actions.
 
 There are two kinds of rules.
 
