@@ -1,5 +1,5 @@
 # ASDlite
-<p><i>ASDlite is a light-weight version of ASDF</i></p>
+<b><i>ASDlite is a light-weight version of ASDF</i></b>
 
 
 ASDlite is a light-weight version of ASDF (Another System Definition Facility), an extensible build facility for Common Lisp. It supports basis ASDF functions and operation classes and can be used as a replacement in many cases.
