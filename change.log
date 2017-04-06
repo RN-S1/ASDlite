@@ -1,0 +1,6 @@
+Version 1.2
+     + The version option of defsystem is now evaluated.
+     
+Version 1.1
+     + Added function component-featurep.
+     * Changed error message printed by #<method print-object (wrong-dependency T)>
