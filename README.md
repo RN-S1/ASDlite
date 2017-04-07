@@ -20,12 +20,12 @@ ASDlite design goals
 * Operation arguments specification in dependencies.
 
 Operations in ASDlite
----------------------
+---------------------   
 
-<code>operation ::= keyword | operation-instance</code>
-<code>operation-type ::= keyword | type-symbol</code>
-<code>operation-designator ::= keyword | (keyword . plist) | type-symbol | operation-instance</code>
-
+    operation ::= keyword | operation-instance
+    operation-type ::= keyword | type-symbol
+    operation-designator ::= keyword | (keyword . plist) | type-symbol | operation-instance
+    
 Operations are passed to <code>perform</code> and other operation-specific methods. Operation designators can be used in the right-hand side of rules.
 We encourage using simple keywords like <code>:compile</code> or <code>:load</code>. For these, ASDlite defines corresponding methods with <code>eql</code> specializers.
 The <i>plist</i> allows you to pass key arguments to the operation methods. In the <i>normal mode</i>, ASDlite accepts only keyword-based forms.
@@ -47,27 +47,26 @@ An <i>action</i> is a pair of an operation and a component. Some actions modify 
 There are two kinds of rules.
 
 caused-by (named "in-order-to" in ASDF)
-<blockquote>If any of dependee actions are already in the current plan (as its results have become out-of-date according to timestamp or as a result of other rules executing successfully), that triggers this rule, i.e. the target action is also placed into the plan.</blockquote>
-
+- If any of dependee actions are already in the current plan (as its results have become out-of-date according to timestamp or as a result of other rules executing successfully), that triggers this rule, i.e. the target action is also placed into the plan.<br>
 requires (named "do-first" in ASDF)
-<blockquote>These dependee actions have to be planned before the operation on the target component. But they do not trigger this rule per se, i.e. re-performing the target operation.</blockquote>
+- These dependee actions have to be planned before the operation on the target component. But they do not trigger this rule per se, i.e. re-performing the target operation.
 
-Syntax
+<b>Syntax</b>
 
-rule ::= (target-op (dep-op {dependee}+)+)
-target-op ::= operation-type
-dep-op ::= operation-designator | :features
-dependee ::= name-or-path | (name-or-path . plist)
-name-or-path ::= component-name | vector | feature
-plist ::= ([:features feature] [:version minimum-version] {property value}*)
-feature ::= keyword | feature-expression
+    rule ::= (target-op (dep-op {dependee}+)+)
+    target-op ::= operation-type
+    dep-op ::= operation-designator | :features
+    dependee ::= name-or-path | (name-or-path . plist)
+    name-or-path ::= component-name | vector | feature
+    plist ::= ([:features feature] [:version minimum-version] {property value}*)
+    feature ::= keyword | feature-expression
 
-Example
+<b>Example</b>
 
-(:component "A"
-  :caused-by ((:compile (:compile "B" "C") (:load "D"))
-              (:load (:load "B" "C")))
-  :requires ((:compile (:load "B"))))
+    (:component "A"
+      :caused-by ((:compile (:compile "B" "C") (:load "D"))
+                  (:load (:load "B" "C")))
+      :requires ((:compile (:load "B"))))
 
 If B has changed, B.fasl needs to be recompiled. So the caused-by rule triggers recompiling of A.fasl irrespective of whether A has itself changed.
 
