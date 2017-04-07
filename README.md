@@ -112,16 +112,19 @@ Platforms
 ---------
 
 The source code was tested on the following Lisp implementations:
-* [LispWorks]() 4.4, 5.0 and 6.1 for Windows,
-* [SBCL]() 1.0.55 for Windows.
+* [LispWorks](http://www.lispworks.com/) 4.4, 5.0 and 6.1 for Windows,
+* [SBCL](http://www.sbcl.org/) 1.0.55 for Windows.
 
 Download and installation
 -------------------------
 
-Simply download the file asdlite.lisp, compile and load it.
-Documentation
+Simply download the file [asdlite.lisp](https://github.com/RN-S1/ASDlite/blob/master/asdlite.lisp), compile and load it.
 
-For general concepts and functions, follow the ASDF documentation.
+Documentation
+--------------
+
+For general concepts and functions, follow the [ASDF documentation](http://common-lisp.net/project/asdf/#documentation).
+
 Changes and additions
 
     Changed syntax of dependency to more consistent:
