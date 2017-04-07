@@ -125,55 +125,6 @@ Documentation
 
 For general concepts and functions, follow the [ASDF documentation](http://common-lisp.net/project/asdf/#documentation).
 
-Changes and additions
-
-    Changed syntax of dependency to more consistent:
-    (dep-op {component-name | (component-name . plist)}+),
-    where plist can contain the :version and :features properties.
-    Other properties are passed as the operation methods arguments (and to make-sub-operation in the compatibility mode).
-    Component slots in-order-to and do-first were replaced by caused-by and requires correspondingly; the old initargs :in-order-to and :do-first are also retained.
-    Dependencies are calculated by the two generic functions:
-     * operation-caused-by (former component-depends-on),
-     + operation-requires (added).
-    The default list of "requires" dependencies usually involves cross-operation rules and is now initialized from a component type by virtue of of generic:
-    + depends-on-requires (added).
-    Turned into generic the following ordinary functions:
-    - coerce-name.
-    Turned into ordinary the following generic functions:
-    - version-satisfies.
-    Removed generics:
-    - component-self-dependencies (in fact replaced with dependencies-on-component),
-    - traverse (replaced by collect-plan)
-    Added structure class action.
-    Action is a minimal planning and performing unit, which stores the operation status and timestamp.
-    Component
-    slots properties
-    Turned into plist instead of alist; the generic function component-property accepts the third optional parameter default.
-    features
-    Added, can be either a keyword or a feature expression (on LispWorks only). The component (and all its children) is only considered during planning when the feature expression is true. When it is false, every operation on the component is treated by the planner as done and does not trigger any caused-by target actions.
-    actions
-    Added, a list of unified actions - no duplicates according to operation-eq.
-    operation-times
-    Removed in favor of actions.
-    Added component-output-pathname generic.
-    It allows target directory specification, e.g. :output-pathname "/my-project/bin/"
-    Added :initform nil form to many slots.
-    Added structure class action with planned status and timestamp slots;
-    Added the component slot actions keeping unique actions.
-    Introduced helpers get-timestamp and set-timestamp.
-    Introduced dynamic-file, a component subclass for cl-source-file and the like.
-    The value of *verbose-out* can be either T or a stream.
-    Renamed
-    - class formatted-system-definition-error to system-definition-simple-error,
-    - some readers of condition classes slots,
-    - some helpers replaced by the similar borrowed from Ystok-Library.
-    Removed
-    - :weakly-depends-on option,
-    - component inline methods,
-    - all calls of the eval function,
-    - standard-asdf-method-combination,
-    - format strings ~<> as delivering them with LispWorks requires keeping the pretty-printer.
-
 
 forked from
 [http://ystok.ru/](http://lisp.ystok.ru/asdlite/)
