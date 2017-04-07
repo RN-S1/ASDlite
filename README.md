@@ -44,12 +44,11 @@ An <i>action</i> is a pair of an operation and a component. Some actions modify 
 
 <i>Dependencies (rules)</i> between actions are stored in each <i>(target)</i> component and represented by the two alists of target operations to other <i>(dependee)</i> actions.
 
-There are two kinds of rules.
-
-caused-by (named "in-order-to" in ASDF)
+<p>There are two kinds of rules:<br>
+caused-by (named "in-order-to" in ASDF)<br>
 - If any of dependee actions are already in the current plan (as its results have become out-of-date according to timestamp or as a result of other rules executing successfully), that triggers this rule, i.e. the target action is also placed into the plan.<br>
-requires (named "do-first" in ASDF)
-- These dependee actions have to be planned before the operation on the target component. But they do not trigger this rule per se, i.e. re-performing the target operation.
+requires (named "do-first" in ASDF)<br>
+- These dependee actions have to be planned before the operation on the target component. But they do not trigger this rule per se, i.e. re-performing the target operation.</p>
 
 <b>Syntax</b>
 
@@ -72,53 +71,52 @@ If B has changed, B.fasl needs to be recompiled. So the caused-by rule triggers 
 
 If A has changed, this neither imply compiling B nor C. But due to the requires rule loading B.fasl must be in the image precede compiling A.
 
-ASDlite macroexpands the :depends-on option into a batch of caused-by rules similarly to what ASDF does (though this behavior is considered rather application-specific):
+ASDlite macroexpands the <code>:depends-on</code> option into a batch of caused-by rules similarly to what ASDF does (though this behavior is considered rather application-specific):
 
-:depends-on dependee-list 
- =>
-(:caused-by (:compile (:compile dependee-list))
-            (:load (:load dependee-list))
-            ...)
+    :depends-on dependee-list 
+     =>
+    (:caused-by (:compile (:compile dependee-list))
+                (:load (:load dependee-list))
+                ...)
 
 CAUTION: A component is only allowed to depend on its siblings, i.e. the components of the same module, no mater how we define dependencies:
-
-    either :caused-by, :requires, or :depends-on option,
-    or operation-caused-by/-requires method.
+* either <code>:caused-by</code>, <code>:requires</code>, or <code>:depends-on</code> option,
+* or <code>operation-caused-by/-requires</code> method.
 
 Observation and rationale
+-------------------------
 
-    The ASDF built-in operation hierarchy is actually of two-level depth. The original ASDF code does not exploit operation inheritance much (though something can be found in asdf-ecl.lisp).
-    The operation slots are rather useless:
-
-    original-initargs
-        Is only referred in print-object
-    parent
-        In principle, indicates the target operation that required this one.
-        But due to reusing operation objects in make-sub-operation, this is not the case.
-        Also used for marking along with other visiting slots during traverse but we follow another approach.
-
-    Adding entirely new operations, i.e. on the first level, is fine. But there is comfortable way to refine existing operations: the easiest way is to add slots to base operation classes as only those properties do get passed into dependency operations.
-    There is a more simple way pass arguments from operate to operation functions - by means of key arguments!
-    The :do-first initarg is actually ignored by ASDF - its always set to
-     ((compile-op (load-op ,@depends-on))))
-    Avoid inline methods, which are rather inelegant in ASDF:
-    - they rely on eval,
-    - ASDF tries to remove a method from a generic function of a different name. Due to non-standard behavior of remove-method in LW 4.4, system redefinition intrusively signals about this.
-    Referring to features in component definition is more useful than in dependency rules.
-    Despite adherence to the object-oriented representation of operations, the source code exhibits "non-generic" approach to naming slot readers and accessors :-).
-    For example:
-     - component-parent vs. operation-parent
-     - component-version vs. missing-version
-     - module-components vs. circular-dependency-components
+<p>1. The ASDF built-in operation hierarchy is actually of two-level depth. The original ASDF code does not exploit operation inheritance much (though something can be found in asdf-ecl.lisp).</p>
+<p>2. The operation slots are rather useless:<br>
+<i>original-initargs</i><br>
+- Is only referred in print-object<br>
+<i>parent</i><br>
+- In principle, indicates the target operation that required this one.<br>
+- But due to reusing operation objects in <code>make-sub-operation</code>, this is not the case.<br>
+- Also used for marking along with other visiting slots during traverse but we follow another approach.<br>
+Adding entirely new operations, i.e. on the first level, is fine. But there is comfortable way to refine existing operations: the easiest way is to add slots to base operation classes as only those properties do get passed into dependency operations.<br>
+There is a more simple way pass arguments from operate to operation functions - by means of key arguments!</p>
+<p>3. The <code>:do-first</code> initarg is actually ignored by ASDF - its always set to<br>
+<code>((compile-op (load-op ,@depends-on))))</code></p>
+<p>4. Avoid inline methods, which are rather inelegant in ASDF:<br>
+- they rely on <code>eval</code>,<br>
+- ASDF tries to remove a method from a generic function of a different name. Due to non-standard behavior of <code>remove-method</code> in LW 4.4, system redefinition intrusively signals about this.<br></p>
+<p>5. Referring to features in component definition is more useful than in dependency rules.<p>
+<p>6. Despite adherence to the object-oriented representation of operations, the source code exhibits "non-generic" approach to naming slot readers and accessors :-).<br>
+For example:<br>
+     - <code>component-parent</code> vs. <code>operation-parent</code><br>
+     - <code>component-version</code> vs. <code>missing-version</code><br>
+     - <code>module-components</code> vs. <code>circular-dependency-components</code></p>
 
 Platforms
+---------
 
 The source code was tested on the following Lisp implementations:
-
-    LispWorks 4.4, 5.0 and 6.1 for Windows,
-    SBCL 1.0.55 for Windows.
+* [LispWorks]() 4.4, 5.0 and 6.1 for Windows,
+* [SBCL]() 1.0.55 for Windows.
 
 Download and installation
+-------------------------
 
 Simply download the file asdlite.lisp, compile and load it.
 Documentation
