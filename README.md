@@ -126,5 +126,7 @@ Documentation
 For general concepts and functions, follow the [ASDF documentation](http://common-lisp.net/project/asdf/#documentation).
 
 
-forked from
-[http://ystok.ru/](http://lisp.ystok.ru/asdlite/)
+
+
+<i>forked from
+[http://ystok.ru/](http://lisp.ystok.ru/asdlite/)</i>
