@@ -1,26 +1,22 @@
-# ASDlite
-<b><i>ASDlite is a light-weight version of ASDF</i></b>
-
+## ASDlite  
+_ASDlite is a light-weight version of ASDF_
+***
 
 ASDlite is a light-weight version of [ASDF (Another System Definition Facility)](http://common-lisp.net/project/asdf/), an extensible build facility for Common Lisp. It supports basis ASDF functions and operation classes and can be used as a replacement in many cases.
 
-Platforms
----------
+### Platforms  
+ASDlite was tested on the following Lisp implementations:   
+* [LispWorks](http://www.lispworks.com/) 4.4, 5.0, and 6.1.  
+* [SBCL](http://www.sbcl.org/) 1.0.55.
 
-ASDlite was tested on the following Lisp implementations:
-* [LispWorks](http://www.lispworks.com/) 4.4, 5.0, and 6.1.
-* [SBCL](http://www.sbcl.org/)SBCL 1.0.55.
-
-ASDlite design goals
---------------------
+### ASDlite design goals
 
 * Small footprint.
 * Ease of embedding into applications and systems not related to "compile-and-load Lisp files" tasks, for example, [YstokHelp](http://lisp.ystok.ru/yhelp/).
 * ASDF compatibility for typical needs.
 * Operation arguments specification in dependencies.
 
-Operations in ASDlite
----------------------   
+### Operations in ASDlite   
 
     operation ::= keyword | operation-instance
     operation-type ::= keyword | type-symbol
@@ -37,8 +33,7 @@ If you feel these are not enough and need "full-fledged" ASDF operation classes,
 
 In the compatibility mode, ASDlite accepts all the above forms of operations and designators.
 
-Dependencies in ASDlite
----------------------
+### Dependencies in ASDlite
 
 An <i>action</i> is a pair of an operation and a component. Some actions modify the file system, whereas other actions modify the current image, and this implies a difference in how to interpret timestamps.
 
@@ -83,8 +78,7 @@ CAUTION: A component is only allowed to depend on its siblings, i.e. the compone
 * either <code>:caused-by</code>, <code>:requires</code>, or <code>:depends-on</code> option,
 * or <code>operation-caused-by/-requires</code> method.
 
-Observation and rationale
--------------------------
+### Observation and rationale
 
 <p>1. The ASDF built-in operation hierarchy is actually of two-level depth. The original ASDF code does not exploit operation inheritance much (though something can be found in asdf-ecl.lisp).</p>
 <p>2. The operation slots are rather useless:<br>
@@ -108,25 +102,19 @@ For example:<br>
      - <code>component-version</code> vs. <code>missing-version</code><br>
      - <code>module-components</code> vs. <code>circular-dependency-components</code></p>
 
-Platforms
----------
-
+### Platforms
 The source code was tested on the following Lisp implementations:
 * [LispWorks](http://www.lispworks.com/) 4.4, 5.0 and 6.1 for Windows,
 * [SBCL](http://www.sbcl.org/) 1.0.55 for Windows.
 
-Download and installation
--------------------------
-
+### Download and installation  
 Simply download the file [asdlite.lisp](https://github.com/RN-S1/ASDlite/blob/master/asdlite.lisp), compile and load it.
 
-Documentation
---------------
-
+### Documentation  
 For general concepts and functions, follow the [ASDF documentation](http://common-lisp.net/project/asdf/#documentation).
 
 
 
-
-<i>forked from
-[http://ystok.ru/](http://lisp.ystok.ru/asdlite/)</i>
+***
+_forked from_  
+_[http://ystok.ru/](http://lisp.ystok.ru/asdlite/)_
